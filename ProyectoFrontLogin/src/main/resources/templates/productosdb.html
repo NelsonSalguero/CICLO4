@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html>
+<head>
+<meta charset="ISO-8859-1">
+
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+	crossorigin="anonymous">
+<link rel="stylesheet" href="assets/css/css.css" />	
+	
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+	integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+	crossorigin="anonymous"></script>
+<title>Menu Principal</title>
+</head>
+<body>
+<header>
+		 <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <div class="container-fluid">
+					 <!-- Brand -->
+  					<a class="navbar-brand" href="#">MARKET-THALIA   </a>
+  					<p>BOGOTA -- MEDELLIN -- CALI</p>
+                </div>
+            </nav>
+</header>
+	  <div class="wrapper">
+        <!-- Sidebar  -->
+        <nav id="sidebar">
+
+            <ul class="list-unstyled components">
+				<li>
+                    <a href="/csv">PRODUCTOS</a>
+                </li>
+                <li class="">
+                    <a href="#">CLIENTES</a>
+                </li>
+                <li>
+                    <a href="#">VENTAS</a>
+                </li>
+                <li>
+                    <a href="#">REPORTES</a>
+                </li>
+                
+                
+            </ul>
+
+            <ul class="list-unstyled CTAs">
+                <li>
+                    <a href="#" class="download">CONSOLIDACION</a>
+                </li>
+                
+            </ul>
+        </nav>
+        
+         <!-- Page Content  -->
+         <div id="content">
+         <h1 style="text-align: center; color: blue">Listado de Productos en la Base de Datos </h1>
+         </form>
+                <form action="/csv">
+                  
+                    <input type="submit" name="accion" value="Regresar" class="btn btn-success">
+                </form>
+         <br>
+         <table border="1">
+		
+			<thead>
+					<tr> 
+							<td>CODIGO</td>
+							<td>NOMBRE</td>
+							<td>NIT PROVEEDOR</td>
+							<td>PRECIO COMPRA</td>
+							<td>IVA</td>
+							<td>PRECIO VENTA</td>
+							
+					</tr>
+			</thead>
+			<tbody>
+					<tr th:each="producto : ${listaProductos}">
+						<td th:text="${producto.id}"> </td>
+						<td th:text="${producto.nombre}"> </td>
+						<td th:text="${producto.idProveedor}"> </td>
+						<td th:text="${producto.precioCompra}"> </td>
+						<td th:text="${producto.ivaCompra}"> </td>
+						<td th:text="${producto.precioVenta}"> </td>
+						<!--  <td>
+							<a th:href="@{'/listar/' + ${producto.codigo}}">Modificar</a>
+								&nbsp;&nbsp;&nbsp;
+							<a th:href="@{'/delete/' + ${producto.codigo}}">Borrar</a>
+						</td>-->
+					</tr>
+			
+			</tbody>
+			
+		</table>
+ </div>
+</body>
+</html>
