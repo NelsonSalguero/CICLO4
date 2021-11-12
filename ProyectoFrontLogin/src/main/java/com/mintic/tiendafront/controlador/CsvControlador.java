@@ -1,6 +1,7 @@
 package com.mintic.tiendafront.controlador;
 
 import java.io.IOException;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.mintic.tiendafront.modelo.Producto;
 import com.mintic.tiendafront.repository.ProductoRepository;
 import com.mintic.tiendafront.service.UploadService;
+
 
 @Controller
 public class CsvControlador {
@@ -33,16 +35,23 @@ public class CsvControlador {
 
 	@PostMapping("/cargarcsv")
 	public String carga(@RequestParam("archivo") MultipartFile file, RedirectAttributes ms) {
+		
+		
 		try {
-			if (file != null || file.getSize() > 0 || !file.isEmpty()) {
+		
 				upload.save(file);
-				ms.addFlashAttribute("mensaje", "Archivo Guardado y Cargado a la Base de Datos Correctamente");
-			}
-			
+				System.out.println("CONTROL= "+UploadService.control + "  NOEXISTPROV= "+UploadService.noexistprov);
+				if (UploadService.control==0 && UploadService.noexistprov==0)
+					ms.addFlashAttribute("mensaje", "Archivo Cargado Exitosamente");
+				else if (UploadService.control==1 && UploadService.noexistprov==0)
+						ms.addFlashAttribute("mensaje", "Error: datos leídos inválidos");
+				else if (UploadService.control==0 && UploadService.noexistprov==1)
+					ms.addFlashAttribute("mensaje", "Algunos productos no se cargaron: Proveedor No Existe");	
+				
 
 		} catch (IOException e) {
 
-			ms.addFlashAttribute("mensaje", "No se seleccionó ningun archivo o es Incorrecto");
+			ms.addFlashAttribute("mensaje", "Error: no se seleccionó archivo para cargar");
 			e.printStackTrace();
 		}
 
@@ -50,18 +59,18 @@ public class CsvControlador {
 
 	}
 
-	@PostMapping("/savepro")
+	//@PostMapping("/savepro")
 	public String savepro(Producto productos) throws IOException {
-		try {
-			productoRepository.save(productos);
-		} catch (Exception e) {
-			// TODO: handle exception
-			System.out.println("Que error saldría");
-		}
-		return "redirect:/csv";
+			try {
+				productoRepository.save(productos);
+			} catch (Exception e) {
+				UploadService.noexistprov=1; //Variable para mostrar mensaje , error por proveedor no existe
+			}
+			
+			return "redirect:/csv";
 	}
 
-	@RequestMapping("/listarpro")
+	@RequestMapping("/listarpro") //Metodo para listar Productos en DB
 	public String verIndex(Model model) {
 		System.out.println("llegó a listar productos");
 		List<Producto> listaProductos = upload.listar();
@@ -69,4 +78,8 @@ public class CsvControlador {
 		return "productosdb";
 	}
 
+	public boolean borrardb(Model model) { //Metodo para borrar la tabla productos before load los productos
+		productoRepository.deleteAll();
+		return false;
+	}
 }
