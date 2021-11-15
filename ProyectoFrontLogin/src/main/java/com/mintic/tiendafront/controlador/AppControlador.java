@@ -31,7 +31,7 @@ public class AppControlador {
 		if (validLogin == 1) {
 			return "menu";
 		} else {
-			model.addAttribute("error", "Usuario o constraseña invalidos.");
+			model.addAttribute("error", "Usuario o contraseña errados, intente de nuevo.");
 			return "index";
 		}
 
