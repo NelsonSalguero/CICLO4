@@ -76,7 +76,7 @@ public class UploadService {
 	
 	@Autowired //Para listar productos en la DB
 		private  ProductoRepository repo;
-			//Listar Productos
+			//Listar Productos en Base de datos
 			public List<Producto> listar(){
 				//System.out.println("llegó a UploadService Listar ");
 				return repo.findAll();	
