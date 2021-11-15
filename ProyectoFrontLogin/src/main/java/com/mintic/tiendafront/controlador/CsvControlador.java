@@ -38,11 +38,10 @@ public class CsvControlador {
 		
 		
 		try {
-		
 				upload.save(file);
 				System.out.println("CONTROL= "+UploadService.control + "  NOEXISTPROV= "+UploadService.noexistprov);
-				if (UploadService.control==0 && UploadService.noexistprov==0)
-					ms.addFlashAttribute("mensaje", "Archivo Cargado Exitosamente");
+				if (UploadService.control==0 && UploadService.noexistprov==0) {
+					    ms.addFlashAttribute("mensaje", "Archivo Cargado Exitosamente");}
 				else if (UploadService.control==1 && UploadService.noexistprov==0)
 						ms.addFlashAttribute("mensaje", "Error: datos leídos inválidos");
 				else if (UploadService.control==0 && UploadService.noexistprov==1)
