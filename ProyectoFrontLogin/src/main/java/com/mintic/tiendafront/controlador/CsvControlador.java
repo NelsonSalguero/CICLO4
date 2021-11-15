@@ -81,4 +81,9 @@ public class CsvControlador {
 		productoRepository.deleteAll();
 		return false;
 	}
+	public void borrarall(Model model) { //Metodo para borrar la tabla productos before load los productos
+		productoRepository.deleteAll();
+		
+	}
+
 }
